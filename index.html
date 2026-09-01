@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rentals — Siva's Wiki</title>
+<style>
+:root {
+  --bg: #0b0f14; --panel: #121822; --panel-border: #1f2937; --text: #e5e7eb; --muted: #8b96a5;
+  --pos: #22c55e; --neg: #ef4444; --gold: #eab308; --accent: #38bdf8;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+a { color: var(--accent); }
+header { padding: 18px 28px; border-bottom: 1px solid var(--panel-border); display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+header h1 { margin: 0; font-size: 20px; letter-spacing: 0.5px; }
+header h1 span { color: var(--accent); }
+header .sub { color: var(--muted); font-size: 12px; }
+header .updated { color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; }
+.layout { display: flex; gap: 20px; padding: 20px 28px 40px; max-width: 1200px; margin: 0 auto; align-items: flex-start; }
+nav.sidebar { flex: 0 0 190px; position: sticky; top: 16px; }
+.sidebar h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin: 0 0 10px; }
+.sidebar ul { list-style: none; margin: 0 0 20px; padding: 0; }
+.sidebar li { margin-bottom: 6px; }
+.sidebar a { color: var(--text); text-decoration: none; font-size: 13px; }
+.sidebar a:hover { color: var(--accent); }
+.topic-active { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 8px; padding: 6px 10px; display: block; color: var(--accent) !important; }
+main.feed { flex: 1 1 auto; min-width: 0; }
+aside.dates { flex: 0 0 160px; position: sticky; top: 16px; }
+.post { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; margin-bottom: 14px; padding: 14px 18px; }
+.post.pinned { border-color: var(--gold); }
+.post summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.post summary::-webkit-details-marker { display: none; }
+.post-title { font-size: 15px; font-weight: 600; }
+.post-badges { display: flex; gap: 6px; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--panel-border); color: var(--muted); }
+.badge-gold { color: var(--gold); border-color: var(--gold); }
+.badge-accent { color: var(--accent); border-color: var(--accent); }
+.post-body { margin-top: 12px; }
+.post-meta { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.post-body h4 { margin: 14px 0 8px; font-size: 13px; color: var(--text); }
+.muted { color: var(--muted); font-size: 13px; }
+table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 12px; overflow: hidden; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--panel-border); font-size: 13px; }
+th { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+tr:last-child td { border-bottom: none; }
+.section-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+footer { padding: 20px 28px; color: var(--muted); font-size: 12px; text-align: center; }
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  nav.sidebar, aside.dates { position: static; flex: none; width: 100%; }
+  .sidebar ul { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sidebar li { margin: 0; }
+}
+@media (max-width: 640px) {
+  header { padding: 14px 16px; }
+  header .updated { text-align: left; width: 100%; }
+  .layout { padding: 16px 12px 40px; }
+  th, td { padding: 12px 12px; font-size: 13px; }
+  .stack-mobile table, .stack-mobile thead, .stack-mobile tbody, .stack-mobile tr { display: block; width: 100%; }
+  .stack-mobile thead { display: none; }
+  .stack-mobile tr { border-bottom: 1px solid var(--panel-border); padding: 10px 0; }
+  .stack-mobile tr:last-child { border-bottom: none; }
+  .stack-mobile td { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: none; padding: 4px 14px; text-align: right; }
+  .stack-mobile td::before { content: attr(data-label); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>🏠 Siva's <span>Wiki</span></h1>
+    <div class="sub">Vancouver rental hunt — public read-only feed</div>
+  </div>
+  <div class="updated">Updated <time class="ts" data-ts="1788303086728">2026-09-01 22:51 UTC</time></div>
+</header>
+<div class="layout">
+  <nav class="sidebar">
+    <h2>Topics</h2>
+    <ul>
+      <li><a href="#" class="topic-active">🏠 Rentals</a></li>
+    </ul>
+  </nav>
+  <main class="feed">
+    <article class="post pinned">
+      <div class="post-title">📌 1825 W 8th Ave, Vancouver, BC — current status</div>
+      <div class="post-body"><div class="section-wrap stack-mobile"><table>
+    <thead><tr><th>Listing</th><th>Price</th><th>Beds/Baths</th><th>Sqft</th><th>Location</th><th>Score</th></tr></thead>
+    <tbody><tr>
+    <td data-label="Listing"><a href="https://www.rew.ca/rentals/7362185/101-1825-w-8th-avenue-vancouver-bc" target="_blank" rel="noopener">101-1825 W 8th Avenue, Vancouver, BC, V6J 1V9</a></td>
+    <td data-label="Price">$2700</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">683</td>
+    <td data-label="Location">Kitsilano, Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.rew.ca/properties/304-1825-w-8th-avenue-vancouver-bc" target="_blank" rel="noopener">304-1825 W 8th Avenue, Vancouver, BC, V6J 1V9</a></td>
+    <td data-label="Price">$649000</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">750</td>
+    <td data-label="Location">Kitsilano, Vancouver</td>
+    <td data-label="Score">2</td>
+  </tr></tbody>
+  </table></div></div>
+    </article>
+    <article class="post" id="post-2026-09-01">
+    <details open>
+      <summary>
+        <span class="post-title">Rental scan — 2026-09-01</span>
+        <span class="post-badges"><span class="badge badge-gold">watch address hit</span> <span class="badge badge-accent">51 new matches</span></span>
+      </summary>
+      <div class="post-body">
+        <div class="post-meta">Checked <time class="ts" data-ts="1788303086731">2026-09-01 22:51 UTC</time></div>
+        <h4>Watch address (1825 W 8th Ave, Vancouver, BC)</h4><div class="section-wrap stack-mobile"><table>
+    <thead><tr><th>Listing</th><th>Price</th><th>Beds/Baths</th><th>Sqft</th><th>Location</th><th>Score</th></tr></thead>
+    <tbody><tr>
+    <td data-label="Listing"><a href="https://www.rew.ca/rentals/7362185/101-1825-w-8th-avenue-vancouver-bc" target="_blank" rel="noopener">101-1825 W 8th Avenue, Vancouver, BC, V6J 1V9</a></td>
+    <td data-label="Price">$2700</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">683</td>
+    <td data-label="Location">Kitsilano, Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.rew.ca/properties/304-1825-w-8th-avenue-vancouver-bc" target="_blank" rel="noopener">304-1825 W 8th Avenue, Vancouver, BC, V6J 1V9</a></td>
+    <td data-label="Price">$649000</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">750</td>
+    <td data-label="Location">Kitsilano, Vancouver</td>
+    <td data-label="Score">2</td>
+  </tr></tbody>
+  </table></div>
+        <h4>New matches</h4><div class="section-wrap stack-mobile"><table>
+    <thead><tr><th>Listing</th><th>Price</th><th>Beds/Baths</th><th>Sqft</th><th>Location</th><th>Score</th></tr></thead>
+    <tbody><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-renovated-bedroom-apt/3TrPdy1aq4LQ5dNJWEQ8KJ" target="_blank" rel="noopener">Renovated 1 Bedroom Apt. - Available Sept 1- Unit 305 - Sophia Court</a></td>
+    <td data-label="Price">$2150</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Mount Pleasant</td>
+    <td data-label="Score">100</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-spacious-2br-near-ubc-and/daf9LUK4okVpyNutW5n1jr" target="_blank" rel="noopener">Spacious 2BR Near UBC and Lordbyng</a></td>
+    <td data-label="Price">$2250</td>
+    <td data-label="Beds/Baths">2bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">100</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-well-maintained-one-bedroom/qFUJUrQgSH9K1PbmzzML29" target="_blank" rel="noopener">Well maintained one-bedroom just steps from the SkyTrain &amp; Downtown Va</a></td>
+    <td data-label="Price">$1650</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">1408 - 8189 Cambie Street Vancouver, Marpole</td>
+    <td data-label="Score">93</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bike-storage-social-room/evw671rdf7TqKNnDssnytj" target="_blank" rel="noopener">Bike Storage, Social Room, Rooftop Adult Lounge Area</a></td>
+    <td data-label="Price">$2025</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Mount Pleasant</td>
+    <td data-label="Score">93</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-vgh-fairview/bw1vM75dBCyFx9Vuhpefp5" target="_blank" rel="noopener">VGH, Fairview</a></td>
+    <td data-label="Price">$2350</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">city of vancouver</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-canvas-spacious-one-bed/9iUEh9KGSHfn7Cs8RSXh5G" target="_blank" rel="noopener">Canvas Spacious One Bed Beside Emily Carr University For Rent</a></td>
+    <td data-label="Price">$2350</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-joyce-collingwood-bed-bath/6WH6ZX3WUXexUTeaCmvXhL" target="_blank" rel="noopener">Joyce/Collingwood 2 Bed 1 Bath Ground Level Guest Suite</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">2bd / 1ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Joyce/Collingwood</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-west-end-heritage-bachelor/a9GJ7aU5xnVpjABvFLGUQ6" target="_blank" rel="noopener">West End Heritage Bachelor Suite Available for October 1st</a></td>
+    <td data-label="Price">$1650</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">1990 Barclay Street</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-in-suite-laundry-elevators/giR9fSz1rkZ3sgTrU5GhTS" target="_blank" rel="noopener">In-suite Laundry, Elevators, Children&#39;s Play Room</a></td>
+    <td data-label="Price">$2425</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Mount Pleasant</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bed-bath-the-joyce/x2J4T62VTLbjb6vT4uuFcF" target="_blank" rel="noopener">1 bed 1 bath @ The Joyce</a></td>
+    <td data-label="Price">$2000</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">90</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-1949-barclay-downtown-bedroom/pHxUbQWxkEmk3jJDqq79qt" target="_blank" rel="noopener">1949 Barclay, Downtown - 1 Bedroom Apartment - 1 Bed/ 1 Bath</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancovuer</td>
+    <td data-label="Score">85</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-spacious-bedroom-downstairs/vRPHG28kxMo1zpTW3CJcJZ" target="_blank" rel="noopener">Spacious 1-Bedroom Downstairs Suite – 800 Sq Ft | Vancouver</a></td>
+    <td data-label="Price">$1550</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">800</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">85</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-large-br-suite-sunset-beach/dNg2q1P5nZ1AG4Hp6Ca6rF" target="_blank" rel="noopener">Large 1 BR Suite; Sunset Beach</a></td>
+    <td data-label="Price">$2452</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">85</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bedroom-bathroom-den/c9s7GeVtv54ip8QeKzjnZT" target="_blank" rel="noopener">1 Bedroom 1 Bathroom + Den</a></td>
+    <td data-label="Price">$2400</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Marpole</td>
+    <td data-label="Score">82</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bedroom-suite-king-edward/cwJmdnxp2QciyEp9cgh9ZD" target="_blank" rel="noopener">1 Bedroom Suite (King Edward station)</a></td>
+    <td data-label="Price">$1800</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-downtown-bedroom-furnished/jrBwyctLPrpKrwCy7q77fA" target="_blank" rel="noopener">Downtown 1 Bedroom Furnished Apartment for Rent</a></td>
+    <td data-label="Price">$2400</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-1brwest-end-ocean-view-one/6TyNLUPG1C3YM3iVFdSbFD" target="_blank" rel="noopener">1BR–West End |Ocean View- One-Bedroom at Park West – Available Sept 15</a></td>
+    <td data-label="Price">$2150</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">1869 comox</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-1949-barclay-downtown-br-103/2GjULpL3qFUhKjNwuYbdjc" target="_blank" rel="noopener">1949 Barclay, Downtown - 1 BR-103 Apartment - Get Your 12th Month FREE</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancovuer</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-1brwest-end-spacious-1869/ezsiXshgSxtAkoysihG65f" target="_blank" rel="noopener">1BR–West End | Spacious 1869 Comox - One-Bedroom – Available Jun 15</a></td>
+    <td data-label="Price">$2150</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">1255 comox</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bright-bdrm-15-bath-ground/eUoFijsnDYvydbE6Wn8krP" target="_blank" rel="noopener">Bright 2 Bdrm 1.5 Bath Ground Level Suite</a></td>
+    <td data-label="Price">$1800</td>
+    <td data-label="Beds/Baths">?bd / 1.5ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">East Vancouver</td>
+    <td data-label="Score">80</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-spacious-bright-bedroom/38BuCybEx4xVfhQpKNCh7Q" target="_blank" rel="noopener">Spacious &amp; Bright 1 Bedroom Apartment at Barclay House</a></td>
+    <td data-label="Price">$2250</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-one-bedroom-suite-on-second/ibzY7A3kra8MXpjiLHst8o" target="_blank" rel="noopener">One bedroom suite on second floor near City Hall</a></td>
+    <td data-label="Price">$2080</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">On West 12 and Cambie</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-br-available-october/wBKCwUzQqDzSuc8nVh9NnH" target="_blank" rel="noopener">1 BR - Available October 1</a></td>
+    <td data-label="Price">$2075</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">West End</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-br-at-edgemont-apartments-get/b7tFmNo7KqcWar7DtPPwxq" target="_blank" rel="noopener">1 BR - 803 at Edgemont Apartments (Get Your 12th Month FREE)</a></td>
+    <td data-label="Price">$2300</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">West End</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-in-building-laundry-close-to/gciHvrVarAAeBJ915P5rF3" target="_blank" rel="noopener">In-Building Laundry, Close to Skytrains, Dishwasher (some units)</a></td>
+    <td data-label="Price">$2250</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">1045 Haro St, Vancouver, BC</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-1550-for-rent-in-collingwood/vjKYkZzv39oKMR3aMqQRZX" target="_blank" rel="noopener">$1550 for Rent in Collingwood – Parking &amp; Balcony – Steps to Joyce Sk</a></td>
+    <td data-label="Price">$1550</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">city of vancouver</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bedroom-ground-level-near/p4C66vkiAhEtmzYQYA4fKR" target="_blank" rel="noopener">2-bedroom ground level near Joyce Skytrain</a></td>
+    <td data-label="Price">$1790</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Renfew Collingwood</td>
+    <td data-label="Score">78</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-new-urban-bedroom-den-in/vj6Lo6Cs8UPQhHd8JGDFFV" target="_blank" rel="noopener">New Urban 1 Bedroom + Den In Dunbar | Move In Today!</a></td>
+    <td data-label="Price">$2350</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Dunbar-Southlands</td>
+    <td data-label="Score">77</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-one-bed-room-in-west-end/qVdj28dWdHJcmfpbszM5ug" target="_blank" rel="noopener">one bed room in west end</a></td>
+    <td data-label="Price">$2350</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-one-month-free-rent-bedroom/rZyHLJw77T255bBgv93ukr" target="_blank" rel="noopener">ONE Month Free Rent - 1-Bedroom Unit in Vancouver - Jervis Tower</a></td>
+    <td data-label="Price">$2100</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/north-vancouver-lions-apartments-fully/e4KuZqKuis5MTtnztWy4bb" target="_blank" rel="noopener">Lions Apartments – Fully Renovated 1-Bedroom Suite</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/north-vancouver-lions-apartments-fully/v8NzBi9HX3roJa9SiymudG" target="_blank" rel="noopener">Lions Apartments – Fully Renovated 1-Bedroom Suite</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-fully-renovated-bedroom-at/qpxyy7oVUiEDy3EXL6SwwT" target="_blank" rel="noopener">Fully Renovated 1-bedroom at Palmor Villa</a></td>
+    <td data-label="Price">$1745</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/bachelor-available-oct-1st/u9PS4veLdcfqKoiNQf23cu" target="_blank" rel="noopener">Bachelor available Oct 1st</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">north shore</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-primary-bed-with-private-bath/gFXaib512cxhtNWvsPJyMQ" target="_blank" rel="noopener">Primary bed with private bath in bright modern Vancouver apartment</a></td>
+    <td data-label="Price">$1680</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-situated-in-vancouver/d6xx1bsLke5FUA9e8oDoNC" target="_blank" rel="noopener">Situated in Vancouver!, Convenient in-suite laundry, 1B/1B</a></td>
+    <td data-label="Price">$2395</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">5083 Joyce St, Vancouver, BC</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.kijiji.ca/v-apartments-condos/vancouver/large-1-bed-unit/1742868441" target="_blank" rel="noopener">Large 1-Bed Unit</a></td>
+    <td data-label="Price">$2195</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver, BC V5T 4J4</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.kijiji.ca/v-apartments-condos/vancouver/one-bedroom-apartment-next-to-seawall-water-view/1742868312" target="_blank" rel="noopener">One Bedroom Apartment Next to Seawall - Water View</a></td>
+    <td data-label="Price">$2350</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">627 Moberly Road, Vancouver, BC</td>
+    <td data-label="Score">75</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bedroom-and-15-bathrooms/hnPuPTbexz1YMDyyAdq7o1" target="_blank" rel="noopener">2 Bedroom and 1.5 bathrooms Laneway - Available October 1</a></td>
+    <td data-label="Price">$2400</td>
+    <td data-label="Beds/Baths">2bd / 1.5ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">72</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.kijiji.ca/v-apartments-condos/vancouver/1-bed-1-den-apartment-near-commercial-broadway-station/1739439814" target="_blank" rel="noopener">1-Bed 1 Den Apartment near Commercial Broadway Station</a></td>
+    <td data-label="Price">$1800</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver, BC V5N 1V9</td>
+    <td data-label="Score">67</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.kijiji.ca/v-apartments-condos/vancouver/large-one-bed-near-marpole-loop-available-october-1st-or-earlier/1742860746" target="_blank" rel="noopener">Large One Bed near Marpole Loop Available October 1st or earlier</a></td>
+    <td data-label="Price">$1847</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver, BC V6P 4M8</td>
+    <td data-label="Score">67</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-bed-bath-apartment/5rNb1Sirugw8kyGS5jiasU" target="_blank" rel="noopener">1 Bed 1 Bath - Apartment</a></td>
+    <td data-label="Price">$1400</td>
+    <td data-label="Beds/Baths">1bd / 1ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">66</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/woodwards-building/6q7VZeWM2Bzx7is6fwyJXg" target="_blank" rel="noopener">WOODWARDS BUILDING</a></td>
+    <td data-label="Price">$2230</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">VANCOUVER  DOWNTOWN</td>
+    <td data-label="Score">65</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-laneway-house/dsVLUbgbMawpMTCFnR9dMZ" target="_blank" rel="noopener">laneway house</a></td>
+    <td data-label="Price">$2500</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">city of vancouver</td>
+    <td data-label="Score">57</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-convenient-suite/wk68jVCnqBzEDbUXrtjX3s" target="_blank" rel="noopener">Convenient Suite</a></td>
+    <td data-label="Price">$1400</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">vanc</td>
+    <td data-label="Score">51</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-2bdrm-main-floor-suite/1sarASL4dvvV12Dg3KTTUA" target="_blank" rel="noopener">2BDRM Main Floor Suite</a></td>
+    <td data-label="Price">$2000</td>
+    <td data-label="Beds/Baths">?bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">city of vancouver</td>
+    <td data-label="Score">50</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-pet-friendly-1br-apartment/iTMnskWgi1wYDStY8Fp1aC" target="_blank" rel="noopener">Pet-friendly 1BR apartment available October 1st!</a></td>
+    <td data-label="Price">$2185</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">50</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-br-724ft2-silhouette/8W3gStadjNgbUbdqQSmS6M" target="_blank" rel="noopener">$2,200 / 1br - 724ft2 - Silhouette Apartments for October 1st</a></td>
+    <td data-label="Price">$2200</td>
+    <td data-label="Beds/Baths">1bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">50</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-beautiful-studio-passive/5JnzWtj9BTj5nCqsXFG2BF" target="_blank" rel="noopener">Beautiful 1 Studio | Passive Design $1,695| The Heights</a></td>
+    <td data-label="Price">$1695</td>
+    <td data-label="Beds/Baths">0bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">Vancouver</td>
+    <td data-label="Score">50</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-in-vancouver-studio-ba/antMrudmEqPKviV317XipR" target="_blank" rel="noopener">In Vancouver, Studio 1/ba, Elevator</a></td>
+    <td data-label="Price">$2035</td>
+    <td data-label="Beds/Baths">0bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">city of vancouver</td>
+    <td data-label="Score">50</td>
+  </tr><tr>
+    <td data-label="Listing"><a href="https://www.craigslist.org/view/d/vancouver-ground-floor-studio-october/kgW4PgxMue368YqPhBXLRj" target="_blank" rel="noopener">Ground Floor Studio, October 1st, Steps to Train, Buses, VGH</a></td>
+    <td data-label="Price">$1900</td>
+    <td data-label="Beds/Baths">0bd / ?ba</td>
+    <td data-label="Sqft">?</td>
+    <td data-label="Location">550 West 12th Avenue, Vancouver</td>
+    <td data-label="Score">50</td>
+  </tr></tbody>
+  </table></div>
+        
+      </div>
+    </details>
+  </article>
+  </main>
+  <aside class="dates">
+    <h2>Archive</h2>
+    <ul><li><a href="#post-2026-09-01">2026-09-01</a></li></ul>
+  </aside>
+</div>
+<footer>Read-only view, auto-generated daily — no controls here on purpose.</footer>
+<script>
+(function () {
+  document.querySelectorAll("time.ts[data-ts]").forEach(function (el) {
+    var ms = Number(el.dataset.ts);
+    if (!ms) return;
+    el.textContent = new Date(ms).toLocaleString(undefined, {
+      month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short",
+    });
+  });
+})();
+</script>
+</body>
+</html>
